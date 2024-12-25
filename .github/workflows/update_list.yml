@@ -38,12 +38,12 @@ jobs:
       with:
         file: adguard_home_rules.txt
 
-    # 步骤 5: 如果文件存在，则检查是否有更改并提交推送
-    - name: Commit and push changes if rules file changed
-      if: steps.check_file.outputs.files_exists == 'true'
+    # 步骤 5: 如果规则文件存在且有更改，则提交并推送
+    - name: Commit and push changes if file exists and changed
+      if: steps.check_file.outputs.files_exists == 'true' && steps.run_script.outcome == 'success'
       run: |
-        git add -A
-        git diff-index --quiet HEAD || {
+        git add adguard_home_rules.txt  # 仅添加规则文件
+        git diff-index --quiet HEAD || {  # 如果文件有更改
           git config --global user.name "GitHub Actions Bot"
           git config --global user.email "github-actions@users.noreply.github.com"
           git commit -m "Update AdGuard Home rules"
