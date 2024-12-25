@@ -2,10 +2,11 @@ name: Update AdGuard Home Rules
 
 on:
   schedule:
-    - cron: "0 2 * * *"  # 每天凌晨 2:00 UTC 更新规则
+    - cron: "0 18 * * *"  # 每天 UTC 时间 18:00 对应北京时间凌晨 2:00 更新规则
   push:
     branches:
       - main  # 监听 main 分支的推送事件
+  workflow_dispatch:  # 支持手动触发工作流
 
 jobs:
   update-rules:
@@ -17,22 +18,36 @@ jobs:
       uses: actions/checkout@v3
 
     # 步骤 2: 确保脚本具有执行权限，并运行脚本生成规则文件
-    - name: Set execute permission for the script and run it
+    - name: Run script to generate rules
       run: |
-        chmod +x generate_formatted_list.sh  # 给脚本加执行权限
-        ./generate_formatted_list.sh        # 执行脚本
-      continue-on-error: false  # 如果脚本失败，则停止后续步骤
+        chmod +x generate_formatted_list.sh
+        ./generate_formatted_list.sh
+      id: run_script  # 给此步骤一个 ID，方便后续引用
 
-    # 步骤 3: 检查是否有规则文件更新，如果更新则进行提交
-    - name: Commit and push updated rules if file changed
+    # 步骤 3: 检查脚本执行是否成功
+    - name: Check script execution status
+      if: steps.run_script.outcome != 'success'
       run: |
-        # 检查是否有文件变更
-        git diff --exit-code || (
+        echo "Error: generate_formatted_list.sh script failed."
+        exit 1
+
+    # 步骤 4: 检查规则文件是否存在
+    - name: Check if rules file exists
+      id: check_file
+      uses: andstor/file-existence-action@v2
+      with:
+        file: adguard_home_rules.txt
+
+    # 步骤 5: 如果文件存在，则检查是否有更改并提交推送
+    - name: Commit and push changes if rules file changed
+      if: steps.check_file.outputs.files_exists == 'true'
+      run: |
+        git add -A
+        git diff-index --quiet HEAD || {
           git config --global user.name "GitHub Actions Bot"
           git config --global user.email "github-actions@users.noreply.github.com"
-          git add adguard_home_rules.txt  # 添加更新的文件
-          git commit -m "Update AdGuard Home rules"  # 提交更新
-          git push  # 推送更改
-        )
+          git commit -m "Update AdGuard Home rules"
+          git push origin main
+        }
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # 使用 GitHub 自动提供的 token 进行推送
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
