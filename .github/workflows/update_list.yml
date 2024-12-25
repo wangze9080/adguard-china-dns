@@ -24,10 +24,16 @@ jobs:
         ./generate_formatted_list.sh        # 执行脚本
       continue-on-error: false  # 如果脚本失败，则停止后续步骤
 
-    # 步骤 3: 检查是否有文件更新，如果有更改（包括文件删除）则提交并推送
+    # 步骤 3: 确认文件是否被重新生成
+    - name: Check if the file is generated
+      run: |
+        ls -l adguard_home_rules.txt  # 检查文件是否存在
+
+    # 步骤 4: 强制添加所有更改并提交推送
     - name: Commit and push updated rules if file changed
       run: |
-        git add -A  # 强制添加所有更改，包括删除、修改、新增文件
+        git add -A  # 强制添加所有更改（包括文件的删除和新增）
+        git status  # 确认文件是否被正确跟踪
         git diff --exit-code || (
           git config --global user.name "GitHub Actions Bot"
           git config --global user.email "github-actions@users.noreply.github.com"
