@@ -4,7 +4,7 @@
 
 ## 功能描述
 
-- **大陆域名**使用国内 DNS 默认使用四川电信DNS和阿里DNS。
+- **大陆域名**使用国内 DNS，默认使用四川电信 DNS 和阿里 DNS。
 - **其他域名**使用境外 DNS。
 - 下载域名列表并根据域名后缀生成规则文件。
 - 生成的规则文件可直接应用于 **AdGuard Home**。
@@ -19,7 +19,13 @@
   - 四川电信 DNS：`61.139.2.69`, `218.6.200.139`
   - 阿里 DNS：`223.5.5.5`
 
-- **其他域名**使用境外 DNS。
+- **其他域名**使用以下境外 DNS：
+  - Google DNS：`https://dns64.dns.google/dns-query`
+  - OpenDNS：`https://208.67.222.222/dns-query`
+  - Cloudflare DNS：`https://101.101.101.101/dns-query`, `tls://1.0.0.1`, `tls://1.1.1.1`
+  - Applied Privacy DNS：`https://doh.applied-privacy.net/query`
+  - Quad9 DNS：`https://149.112.112.112/dns-query`
+  - OpenDNS 备用：`https://208.67.220.220/dns-query`
 
 ## 注意事项
 
