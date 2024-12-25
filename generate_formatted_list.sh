@@ -9,7 +9,7 @@ set -e  # 遇到错误立即退出
 set -o pipefail  # 管道中的任意命令失败则脚本退出
 
 # 主下载链接
-main_url="https://gh.acg2.icu/https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/direct.txt"
+main_url="https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/direct.txt"
 
 # 备用下载链接
 backup_url="https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/direct.txt"
@@ -21,8 +21,7 @@ downloaded_file="china_list.txt"
 output_file="adguard_home_rules.txt"
 
 # 固定文本
-fixed_text="tls://AdGuard-6f2fc3.dns.nextdns.io
-https://dns64.dns.google/dns-query
+fixed_text="https://dns64.dns.google/dns-query
 https://208.67.222.222/dns-query
 https://101.101.101.101/dns-query
 tls://1.0.0.1
