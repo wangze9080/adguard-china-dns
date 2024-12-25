@@ -36,7 +36,7 @@ jobs:
       id: check_file
       uses: andstor/file-existence-action@v2
       with:
-        file: adguard_home_rules.txt
+        files: adguard_home_rules.txt  # 提供正确的文件路径列表
 
     # 步骤 5: 如果规则文件存在且有更改，则提交并推送
     - name: Commit and push changes if file exists and changed
