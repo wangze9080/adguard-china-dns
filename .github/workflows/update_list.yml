@@ -1,40 +1,33 @@
-name: Generate AdGuard Home Rules
+name: Update AdGuard Home Rules
 
 on:
-  schedule:
-    - cron: "0 2 * * *"  # 每天凌晨 2 点
-  workflow_dispatch:  # 手动触发工作流
+  push:
+    branches:
+      - main  # 触发工作流的分支
+  workflow_dispatch:  # 支持手动触发工作流
 
 jobs:
-  generate-rules:
-    runs-on: ubuntu-latest
+  update:
+    runs-on: ubuntu-latest  # 使用 Ubuntu 环境运行
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      # 检出当前仓库的代码
+      - name: Checkout repository
+        uses: actions/checkout@v3  # 通过 GITHUB_TOKEN 自动进行身份验证
 
-    - name: List directory contents for debugging
-      run: ls -la  # 列出当前目录，确保可以看到脚本文件
+      # 运行脚本生成规则
+      - name: Run the script to generate the rules
+        run: |
+          chmod +x generate_formatted_list.sh
+          ./generate_formatted_list.sh
 
-    - name: Ensure script permissions
-      run: chmod +x generate_formatted_list.sh  # 确保脚本可执行
-
-    - name: Run the script
-      run: ./generate_formatted_list.sh  # 执行脚本
-
-    - name: Debug generated files
-      run: |
-        echo "当前目录内容："
-        ls -la
-        echo "检查生成的文件内容："
-        cat ./adguard_home_rules.txt || echo "文件不存在或为空。"
-
-    - name: Commit and push changes
-      run: |
-        git config --global user.name "GitHub Actions Bot"
-        git config --global user.email "actions@github.com"
-        git add adguard_home_rules.txt
-        git commit -m "Update AdGuard Home rules"
-        git push
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # 提交并推送更改
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add adguard_home_rules.txt
+          git commit -m "Update AdGuard Home rules"
+          git push origin HEAD:main  # 推送到当前仓库的 main 分支
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # 使用 GitHub 提供的 GITHUB_TOKEN 进行身份验证
