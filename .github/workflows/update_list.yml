@@ -24,14 +24,13 @@ jobs:
         ./generate_formatted_list.sh        # 执行脚本
       continue-on-error: false  # 如果脚本失败，则停止后续步骤
 
-    # 步骤 3: 检查是否有文件更新，如果更新则提交并推送
+    # 步骤 3: 检查是否有文件更新，如果有更改（包括文件删除）则提交并推送
     - name: Commit and push updated rules if file changed
       run: |
-        # 检查是否有变更
+        git add -A  # 强制添加所有更改，包括删除、修改、新增文件
         git diff --exit-code || (
           git config --global user.name "GitHub Actions Bot"
           git config --global user.email "github-actions@users.noreply.github.com"
-          git add adguard_home_rules.txt  # 添加更新后的文件
           git commit -m "Update AdGuard Home rules"  # 提交更改
           git push origin main  # 将更改推送到 main 分支
         )
