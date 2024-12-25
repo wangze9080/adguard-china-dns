@@ -2,8 +2,8 @@ name: Generate AdGuard Home Rules
 
 on:
   schedule:
-    - cron: "0 2 * * *" # 每天凌晨 2 点运行
-  workflow_dispatch: # 手动触发工作流
+    - cron: "0 2 * * *"  # 每天凌晨 2 点
+  workflow_dispatch:  # 手动触发工作流
 
 jobs:
   generate-rules:
@@ -13,17 +13,18 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
+    - name: Ensure script permissions
+      run: chmod +x generate_adguard_rules.sh
+
     - name: Run the script
-      run: |
-        chmod +x generate_adguard_rules.sh
-        ./generate_adguard_rules.sh
+      run: ./generate_adguard_rules.sh
 
     - name: Debug generated files
       run: |
         echo "当前目录内容："
         ls -la
-        echo "检查生成的文件："
-        cat ./adguard_home_rules.txt || echo "文件不存在或内容为空。"
+        echo "检查生成的文件内容："
+        cat ./adguard_home_rules.txt || echo "文件不存在或为空。"
 
     - name: Commit and push changes
       run: |
