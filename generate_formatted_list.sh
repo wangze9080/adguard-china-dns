@@ -81,4 +81,33 @@ process_file() {
   {
       if (substr($0, 1, 1) == ".") $0 = substr($0, 2);
       printf "[/%s/]", $0;
-      for (i in ips) printf " %s", ips
+      for (i in ips) printf " %s", ips[i];
+      printf "\n";
+  }
+  END {
+      print "\n文件处理完成。" > "/dev/stderr";
+  }
+  ' "$input_file" >> "$output_file"
+
+  echo "格式化完成，输出保存到 $output_file"
+}
+
+# 主流程
+# 尝试使用主链接下载文件
+if download_file "$main_url" "$downloaded_file"; then
+    # 下载成功，开始处理文件
+    process_file "$downloaded_file" "$output_file"
+else
+  # 主链接下载失败，尝试备用链接
+  echo "主链接下载失败，正在尝试备用链接..."
+  if download_file "$backup_url" "$downloaded_file"; then
+    # 备用链接下载成功，开始处理文件
+    process_file "$downloaded_file" "$output_file"
+  else
+    # 备用链接也失败，报错并退出
+    echo "备用链接下载也失败，请检查网络连接或 URL。"
+    exit 1
+  fi
+fi
+
+exit 0
