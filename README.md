@@ -32,7 +32,7 @@
 
 - 确保脚本所需的网络环境正常，能够成功下载域名列表。
 - 国内 DNS 和境外 DNS 的配置可以根据需要进行修改，脚本默认使用四川电信 DNS 和阿里 DNS。
-- 规则生成后会保存为 `adguard_home_rules.txt` 文件，AdGuard Home 会自动识别并应用这些规则。
+- 规则生成后会保存为 `adguard_home_rules.txt` 文件，在AdGuard Home 配置文件里配置好txt文件路径，AdGuard Home会自动识别并应用这些规则。
 
 ## 许可协议
 
