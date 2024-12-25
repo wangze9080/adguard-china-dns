@@ -22,6 +22,13 @@ jobs:
         run: |
           chmod +x generate_formatted_list.sh  # 确保脚本具有执行权限
           ./generate_formatted_list.sh  # 执行脚本生成规则文件
+          # 检查输出文件是否存在
+          if [ -f "adguard_home_rules.txt" ]; then
+            echo "Rules file generated successfully!"
+          else
+            echo "Error: Rules file not generated!"
+            exit 1
+          fi
         continue-on-error: false  # 若脚本失败，停止后续步骤
 
       # 步骤 3: 检查是否有变更并推送更改
