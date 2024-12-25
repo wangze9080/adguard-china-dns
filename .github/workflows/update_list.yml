@@ -14,26 +14,26 @@ jobs:
       uses: actions/checkout@v3
 
     - name: List directory contents for debugging
-      run: ls -la  # 列出当前目录，确保可以看到 adguard-china-dns 目录
+      run: ls -la  # 列出当前目录，确保可以看到脚本文件
 
     - name: Ensure script permissions
-      run: chmod +x adguard-china-dns/generate_formatted_list.sh  # 确保脚本可执行
+      run: chmod +x generate_formatted_list.sh  # 确保脚本可执行
 
     - name: Run the script
-      run: ./adguard-china-dns/generate_formatted_list.sh  # 执行脚本
+      run: ./generate_formatted_list.sh  # 执行脚本
 
     - name: Debug generated files
       run: |
         echo "当前目录内容："
         ls -la
         echo "检查生成的文件内容："
-        cat ./adguard-china-dns/adguard_home_rules.txt || echo "文件不存在或为空。"
+        cat ./adguard_home_rules.txt || echo "文件不存在或为空。"
 
     - name: Commit and push changes
       run: |
         git config --global user.name "GitHub Actions Bot"
         git config --global user.email "actions@github.com"
-        git add adguard-china-dns/adguard_home_rules.txt
+        git add adguard_home_rules.txt
         git commit -m "Update AdGuard Home rules"
         git push
       env:
