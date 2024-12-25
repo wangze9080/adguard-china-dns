@@ -22,14 +22,19 @@ jobs:
         run: |
           chmod +x generate_formatted_list.sh  # 确保脚本具有执行权限
           ./generate_formatted_list.sh  # 执行脚本生成规则文件
+        continue-on-error: false  # 若脚本失败，停止后续步骤
 
-      # 步骤 3: 提交并推送更改到仓库
-      - name: Commit and push changes
+      # 步骤 3: 检查是否有变更并推送更改
+      - name: Commit and push changes if there are updates
         run: |
           git config --global user.name "GitHub Actions Bot"  # 设置提交者名称
           git config --global user.email "github-actions[bot]@users.noreply.github.com"  # 设置提交者邮箱
-          git add . # 将所有更改过的和新的文件添加到 git 暂存区
-          git commit -m "Update AdGuard Home rules and scripts"  # 提交更改，可以修改提交信息
-          git push origin HEAD:main  # 将更改推送到 main 分支
+          
+          # 检查是否有文件变更
+          git diff --exit-code || (
+            git add .  # 将所有更改过的和新的文件添加到 git 暂存区
+            git commit -m "Update AdGuard Home rules and scripts"  # 提交更改
+            git push origin HEAD:main  # 将更改推送到 main 分支
+          )
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # 使用 GitHub 自动提供的 token 进行推送
