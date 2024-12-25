@@ -13,13 +13,17 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    - name: Set up Bash shell
-      run: sudo apt-get update && sudo apt-get install -y curl
-
     - name: Run the script
       run: |
         chmod +x generate_adguard_rules.sh
         ./generate_adguard_rules.sh
+
+    - name: Debug generated files
+      run: |
+        echo "当前目录内容："
+        ls -la
+        echo "检查生成的文件："
+        cat ./adguard_home_rules.txt || echo "文件不存在或内容为空。"
 
     - name: Commit and push changes
       run: |
