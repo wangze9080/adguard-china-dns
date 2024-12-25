@@ -5,6 +5,9 @@
 #   自动生成适配 AdGuard Home 的规则文件。
 # ----------------------------------------------------------------
 
+set -e  # 遇到错误立即退出
+set -o pipefail  # 管道中的任意命令失败则脚本退出
+
 # 主下载链接
 main_url="https://gh.acg2.icu/https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/direct.txt"
 
@@ -14,10 +17,10 @@ backup_url="https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/d
 # 下载后的文件保存名称
 downloaded_file="china_list.txt"
 
-# 输出文件名称（位于 GitHub 仓库的根目录）
-output_file="./adguard_home_rules.txt"
+# 输出文件名称
+output_file="adguard_home_rules.txt"
 
-# 固定文本：DNS 服务器和一些域名映射
+# 固定文本
 fixed_text="tls://AdGuard-6f2fc3.dns.nextdns.io
 https://dns64.dns.google/dns-query
 https://208.67.222.222/dns-query
@@ -36,12 +39,10 @@ https://208.67.220.220/dns-query
 [/wegame.com.cn/]61.139.2.69
 [/xoyocdn.com/]61.139.2.69"
 
-# 定义 IP 地址数组
+# IP 地址数组
 ips=("61.139.2.69" "218.6.200.139" "223.5.5.5")
 
-# ----------------------------------------------------------------
-# 函数定义：下载文件
-# ----------------------------------------------------------------
+# 下载文件函数
 download_file() {
   local url="$1"
   local output="$2"
@@ -56,79 +57,28 @@ download_file() {
   fi
 }
 
-# ----------------------------------------------------------------
-# 函数定义：处理文件格式化
-# ----------------------------------------------------------------
+# 处理文件格式化
 process_file() {
   local input_file="$1"
   local output_file="$2"
   local ips_arr=("${ips[@]}")
 
-  # 确保输入文件存在
   if [[ ! -f "$input_file" ]]; then
     echo "错误：输入文件 $input_file 不存在。"
     exit 1
   fi
 
-  # 获取总行数
   local total_lines=$(wc -l < "$input_file")
   echo "总行数: $total_lines"
 
-  # 将固定文本写入输出文件
   echo "$fixed_text" > "$output_file"
-  echo -e "\n\n" >> "$output_file" # 追加两个换行符
+  echo -e "\n\n" >> "$output_file"
 
-  # 使用 awk 处理文件
   awk -v ips_str="${ips_arr[*]}" -v total_lines="$total_lines" '
   BEGIN {
-      processed_lines = 0;
-      split(ips_str,ips," ");
+      split(ips_str, ips, " ");
   }
   {
-      if (substr($0, 1, 1) == ".") {
-          $0 = substr($0, 2);
-      }
+      if (substr($0, 1, 1) == ".") $0 = substr($0, 2);
       printf "[/%s/]", $0;
-      for (i = 1; i <= length(ips); i++) {
-        printf " %s", ips[i];
-      }
-      printf "\n";
-
-      processed_lines++;
-      progress = int(processed_lines / total_lines * 100);
-      if (processed_lines % 100 == 0) {
-          printf "文件处理进度: %d%% (%d/%d)\r", progress, processed_lines, total_lines > "/dev/stderr";
-      }
-  }
-  END {
-     print "\n文件处理完成。" > "/dev/stderr";
-  }
-  ' "$input_file" >> "$output_file"
-
-  echo "格式化完成，输出保存到 $output_file"
-}
-
-# ----------------------------------------------------------------
-# 主流程
-# ----------------------------------------------------------------
-
-# 尝试使用主链接下载文件
-if download_file "$main_url" "$downloaded_file"; then
-    process_file "$downloaded_file" "$output_file"
-else
-    echo "主链接下载失败，正在尝试备用链接..."
-    if download_file "$backup_url" "$downloaded_file"; then
-        process_file "$downloaded_file" "$output_file"
-    else
-        echo "备用链接下载也失败，请检查网络连接或 URL。"
-        exit 1
-    fi
-fi
-
-# 检查输出文件是否存在
-if [[ ! -f "$output_file" ]]; then
-  echo "错误：生成的规则文件 $output_file 不存在。"
-  exit 1
-fi
-
-exit 0
+      for (i in ips) printf " %s", ips
