@@ -22,7 +22,8 @@
 - **其他域名**使用以下境外 DNS：
   - Google DNS：`https://dns64.dns.google/dns-query`
   - OpenDNS：`https://208.67.222.222/dns-query`
-  - Cloudflare DNS：`https://101.101.101.101/dns-query`, `tls://1.0.0.1`, `tls://1.1.1.1`
+  - Quad101（TWNIC 提供）：`https://101.101.101.101/dns-query`
+  - Cloudflare DNS：`tls://1.0.0.1`, `tls://1.1.1.1`
   - Applied Privacy DNS：`https://doh.applied-privacy.net/query`
   - Quad9 DNS：`https://149.112.112.112/dns-query`
   - OpenDNS 备用：`https://208.67.220.220/dns-query`
