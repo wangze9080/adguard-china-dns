@@ -11,7 +11,7 @@
 
 ## 域名规则来源
 
-域名规则来自 [Loyalsoldier/surge-rules](https://github.com/Loyalsoldier/surge-rules) 仓库中的直连域名列表 `direct.txt`。该文件包含了常见的需要直连的域名，我们将根据这些域名生成适配的 **AdGuard Home** 规则。
+域名规则来自 [Loyalsoldier/surge-rules](https://github.com/Loyalsoldier/surge-rules) 仓库中的直连域名列表 `direct.txt`。该文件包含了常见的需要直连的域名，将根据这些域名生成适配的 **AdGuard Home** 规则。
 
 ## 默认 DNS 配置
 
