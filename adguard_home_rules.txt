@@ -576,6 +576,8 @@ https://208.67.220.220/dns-query
 [/time.izatcloud.net/] 202.100.96.68 218.203.123.116 223.5.5.5
 [/time.xtracloud.net/] 202.100.96.68 218.203.123.116 223.5.5.5
 [/tj-pod1-smp-device.apple.com/] 202.100.96.68 218.203.123.116 223.5.5.5
+[/tj-pod2-smp-device.apple.com/] 202.100.96.68 218.203.123.116 223.5.5.5
+[/tj-pod3-smp-device.apple.com/] 202.100.96.68 218.203.123.116 223.5.5.5
 [/tools.google.com/] 202.100.96.68 218.203.123.116 223.5.5.5
 [/tp.louisvuitton.com/] 202.100.96.68 218.203.123.116 223.5.5.5
 [/universal-activity-service.itunes.apple.com/] 202.100.96.68 218.203.123.116 223.5.5.5
