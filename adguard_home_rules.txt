@@ -148,6 +148,7 @@ https://208.67.220.220/dns-query
 [/communities.apple.com/] 202.100.96.68 218.203.123.116 223.5.5.5
 [/configuration.apple.com/] 202.100.96.68 218.203.123.116 223.5.5.5
 [/configuration.apple.com.akadns.net/] 202.100.96.68 218.203.123.116 223.5.5.5
+[/configuration.ls.apple.com/] 202.100.96.68 218.203.123.116 223.5.5.5
 [/connectivitycheck.gstatic.com/] 202.100.96.68 218.203.123.116 223.5.5.5
 [/crashlyticsreports-pa.googleapis.com/] 202.100.96.68 218.203.123.116 223.5.5.5
 [/crl-lb.apple.com.akadns.net/] 202.100.96.68 218.203.123.116 223.5.5.5
@@ -364,10 +365,12 @@ https://208.67.220.220/dns-query
 [/msdprod-ad.download.prss.microsoft.com/] 202.100.96.68 218.203.123.116 223.5.5.5
 [/msproduct.download.prss.microsoft.com/] 202.100.96.68 218.203.123.116 223.5.5.5
 [/music.apple.com/] 202.100.96.68 218.203.123.116 223.5.5.5
+[/musicstatus.itunes.apple.com/] 202.100.96.68 218.203.123.116 223.5.5.5
 [/musicstatus.music.apple.com/] 202.100.96.68 218.203.123.116 223.5.5.5
 [/mvod.itunes.apple.com/] 202.100.96.68 218.203.123.116 223.5.5.5
 [/myapp.itunes.apple.com/] 202.100.96.68 218.203.123.116 223.5.5.5
 [/myvs.download.prss.microsoft.com/] 202.100.96.68 218.203.123.116 223.5.5.5
+[/mzstorekit.itunes.apple.com/] 202.100.96.68 218.203.123.116 223.5.5.5
 [/np-edge.itunes.apple.com/] 202.100.96.68 218.203.123.116 223.5.5.5
 [/ntp.aliyun.com/] 202.100.96.68 218.203.123.116 223.5.5.5
 [/ntp.tencent.com/] 202.100.96.68 218.203.123.116 223.5.5.5
@@ -18608,6 +18611,7 @@ https://208.67.220.220/dns-query
 [/capsuleshanghai.com/] 202.100.96.68 218.203.123.116 223.5.5.5
 [/captain-cro.com/] 202.100.96.68 218.203.123.116 223.5.5.5
 [/captainbi.com/] 202.100.96.68 218.203.123.116 223.5.5.5
+[/captive.apple.com/] 202.100.96.68 218.203.123.116 223.5.5.5
 [/capturetheflag.fun/] 202.100.96.68 218.203.123.116 223.5.5.5
 [/capvision.com/] 202.100.96.68 218.203.123.116 223.5.5.5
 [/capwhale.com/] 202.100.96.68 218.203.123.116 223.5.5.5
